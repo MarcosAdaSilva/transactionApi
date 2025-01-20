@@ -16,8 +16,7 @@ public class TransactionDto {
     private BigDecimal total;
     private LocalDateTime createdAt;
     private String cardNumber;
-    private String ccv;
+    private String cvv;
     private String owner;
     private String ein;
-
 }

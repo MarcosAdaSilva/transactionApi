@@ -7,13 +7,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TransactionService {
-
     List<Transaction> findAll();
-
     Transaction save(TransactionDto transactionDto);
-
     Transaction findById(UUID id);
-
     Transaction update(UUID id, TransactionDto transactionDto);
-
 }

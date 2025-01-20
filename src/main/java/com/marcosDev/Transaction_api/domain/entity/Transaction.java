@@ -1,9 +1,8 @@
 package com.marcosDev.Transaction_api.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -12,30 +11,31 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tb_transactions")
 public class Transaction {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID transactionId;
 
-    @Column
+    @Column(nullable = false)
     private BigDecimal total;
 
-    @Column
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @Column
+    @Column(nullable = false)
+    @JsonIgnore
     private String cardNumber;
 
-    @Column
+    @Column(nullable = false)
+    @JsonIgnore // Adicionado JsonIgnore para o CVV por segurança
     private String cvv;
 
-    @Column
+    @Column(nullable = false)
     private String owner;
 
-    @Column
+    @Column(nullable = false)
     private String ein;
-
 }

@@ -5,6 +5,7 @@ import com.marcosDev.Transaction_api.domain.entity.Transaction;
 import com.marcosDev.Transaction_api.repository.TransactionRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +13,6 @@ import java.util.UUID;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
-
     private final TransactionRepository transactionRepository;
 
     public TransactionServiceImpl(TransactionRepository transactionRepository) {
@@ -20,6 +20,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    @Transactional
     public Transaction save(TransactionDto transactionDto) {
         Transaction transaction = new Transaction();
         BeanUtils.copyProperties(transactionDto, transaction);
@@ -27,25 +28,28 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Transaction> findAll() {
         return transactionRepository.findAll();
     }
 
-
     @Override
+    @Transactional(readOnly = true)
     public Transaction findById(UUID id) {
-        return transactionRepository.findById(id).get();
+        return transactionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Transaction not found with id: " + id));
     }
 
     @Override
+    @Transactional
     public Transaction update(UUID id, TransactionDto transactionDto) {
-        Optional<Transaction> transaction = transactionRepository.findById(id);
-        if (transaction.isPresent()) {
-            throw new RuntimeException("Transaction not found");
+        Optional<Transaction> transactionOpt = transactionRepository.findById(id);
+        if (transactionOpt.isEmpty()) { // Corrigida a lógica do if
+            throw new RuntimeException("Transaction not found with id: " + id);
         }
-        BeanUtils.copyProperties(transactionDto, transaction.get());
-        return transactionRepository.save(transaction.get());
+        Transaction transaction = transactionOpt.get();
+        BeanUtils.copyProperties(transactionDto, transaction);
+        transaction.setTransactionId(id); // Mantém o ID original
+        return transactionRepository.save(transaction);
     }
-
-
 }
