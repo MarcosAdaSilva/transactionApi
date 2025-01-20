@@ -27,13 +27,11 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Transaction> findAll() {
         return transactionRepository.findAll();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Transaction findById(UUID id) {
         return transactionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Transaction not found with id: " + id));

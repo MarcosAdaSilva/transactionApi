@@ -25,25 +25,25 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "transaction_id")
-    UUID id;
+    private UUID id;
 
     @Column(name = "total", nullable = false)
-    BigDecimal total;
+    private BigDecimal total;
 
     @Column(name = "created_at", nullable = false)
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "card_number", nullable = false)
     @JsonIgnore
-    String cardNumber;
+    private String cardNumber;
 
     @Column(name = "cvv", nullable = false)
     @JsonIgnore
-    String cvv;
+    private String cvv;
 
     @Column(name = "owner", nullable = false)
-    String owner;
+    private String owner;
 
     @Column(name = "ein", nullable = false)
-    String ein;
+    private String ein;
 }
