@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -27,22 +28,24 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Transaction> findAll() {
-        return List.of();
+        return transactionRepository.findAll();
     }
 
 
     @Override
     public Transaction findById(UUID id) {
-        return null;
+        return transactionRepository.findById(id).get();
     }
 
     @Override
     public Transaction update(UUID id, TransactionDto transactionDto) {
-        return null;
+        Optional<Transaction> transaction = transactionRepository.findById(id);
+        if (transaction.isPresent()) {
+            throw new RuntimeException("Transaction not found");
+        }
+        BeanUtils.copyProperties(transactionDto, transaction.get());
+        return transactionRepository.save(transaction.get());
     }
 
-    @Override
-    public void delete(UUID id) {
 
-    }
 }

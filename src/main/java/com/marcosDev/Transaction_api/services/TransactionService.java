@@ -16,5 +16,4 @@ public interface TransactionService {
 
     Transaction update(UUID id, TransactionDto transactionDto);
 
-    void delete(UUID id);
 }

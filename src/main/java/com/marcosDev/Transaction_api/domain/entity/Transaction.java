@@ -30,7 +30,7 @@ public class Transaction {
     private String cardNumber;
 
     @Column
-    private String ccv;
+    private String cvv;
 
     @Column
     private String owner;
