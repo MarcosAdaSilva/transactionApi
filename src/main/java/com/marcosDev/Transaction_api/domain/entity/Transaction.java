@@ -2,40 +2,48 @@ package com.marcosDev.Transaction_api.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@Table(name = "tb_transactions")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tb_transactions")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Transaction {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID transactionId;
+    @Column(name = "transaction_id")
+    UUID id;
 
-    @Column(nullable = false)
-    private BigDecimal total;
+    @Column(name = "total", nullable = false)
+    BigDecimal total;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
+    @Column(name = "created_at", nullable = false)
+    LocalDateTime createdAt;
 
-    @Column(nullable = false)
+    @Column(name = "card_number", nullable = false)
     @JsonIgnore
-    private String cardNumber;
+    String cardNumber;
 
-    @Column(nullable = false)
-    @JsonIgnore // Adicionado JsonIgnore para o CVV por segurança
-    private String cvv;
+    @Column(name = "cvv", nullable = false)
+    @JsonIgnore
+    String cvv;
 
-    @Column(nullable = false)
-    private String owner;
+    @Column(name = "owner", nullable = false)
+    String owner;
 
-    @Column(nullable = false)
-    private String ein;
+    @Column(name = "ein", nullable = false)
+    String ein;
 }

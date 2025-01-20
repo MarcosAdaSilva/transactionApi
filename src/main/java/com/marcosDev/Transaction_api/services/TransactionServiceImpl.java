@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -43,13 +42,9 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional
     public Transaction update(UUID id, TransactionDto transactionDto) {
-        Optional<Transaction> transactionOpt = transactionRepository.findById(id);
-        if (transactionOpt.isEmpty()) { // Corrigida a lógica do if
-            throw new RuntimeException("Transaction not found with id: " + id);
-        }
-        Transaction transaction = transactionOpt.get();
+        Transaction transaction = findById(id);
         BeanUtils.copyProperties(transactionDto, transaction);
-        transaction.setTransactionId(id); // Mantém o ID original
+        transaction.setId(id);
         return transactionRepository.save(transaction);
     }
 }

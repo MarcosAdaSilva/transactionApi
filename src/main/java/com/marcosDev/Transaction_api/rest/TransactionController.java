@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/transactions")  // Melhor prática para versionamento da API
+@RequestMapping("/api/v1/transactions")
 public class TransactionController {
     private static final Logger logger = LoggerFactory.getLogger(TransactionController.class);
     private final TransactionService transactionService;
@@ -26,7 +26,7 @@ public class TransactionController {
     public ResponseEntity<Transaction> save(@RequestBody TransactionDto transactionDto) {
         logger.info("Iniciando criação de nova transação");
         Transaction transaction = transactionService.save(transactionDto);
-        logger.info("Transação criada com sucesso. ID: {}", transaction.getTransactionId());
+        logger.info("Transação criada com sucesso. ID: {}", transaction.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(transaction);
     }
 
