@@ -1,6 +1,7 @@
 package com.marcosDev.Transaction_api.rest;
 
 import com.marcosDev.Transaction_api.domain.dtos.UsersDto;
+import com.marcosDev.Transaction_api.services.UsersService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +15,9 @@ public class UsersController {
 
         private final UsersService userService;
 
-        public UsersController(UsersService userService) {
-            this.userService = userService;
+        public UsersController(UsersService usersService) {
+
+            this.userService = usersService;
         }
 
         @PostMapping
